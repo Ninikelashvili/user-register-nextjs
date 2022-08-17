@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { AiTwotoneEdit, AiFillDelete } from "react-icons/ai";
 import Link from "next/link";
 
-export default function Table() {
+const Table = () => {
   return (
     <TableContent>
       <TableNavigation>
@@ -51,11 +51,11 @@ export default function Table() {
             <span>Role</span>
           </td>
           <td>
-            <button>
-              <Link href="/Edit">
+            <Link href="/Edit">
+              <button>
                 <AiTwotoneEdit />
-              </Link>
-            </button>
+              </button>
+            </Link>
             <button>
               <AiFillDelete />
             </button>
@@ -64,7 +64,7 @@ export default function Table() {
       </TableList>
     </TableContent>
   );
-}
+};
 const TableContent = styled.table`
   width: 100%;
   margin: 0 auto;
@@ -122,3 +122,5 @@ const TableList = styled.tbody`
     }
   }
 `;
+
+export default Table;
