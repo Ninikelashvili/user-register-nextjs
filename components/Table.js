@@ -8,6 +8,7 @@ const Table = () => {
   const { isLoading, isError, data, error } = useQuery("users", getUsers);
   if (isLoading) return <div>Spiner</div>;
   if (isError) return <div>There is error {error}</div>;
+
   return (
     <TableContent>
       <TableNavigation>
