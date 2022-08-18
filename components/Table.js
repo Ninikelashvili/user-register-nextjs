@@ -1,8 +1,13 @@
 import styled from "styled-components";
 import { AiTwotoneEdit, AiFillDelete } from "react-icons/ai";
 import Link from "next/link";
+import { getUsers } from "../getdata/datafetch";
+import { useQuery } from "react-query";
 
 const Table = () => {
+  const { isLoading, isError, data, error } = useQuery("users", getUsers);
+  if (isLoading) return <div>Spiner</div>;
+  if (isError) return <div>There is error {error}</div>;
   return (
     <TableContent>
       <TableNavigation>
@@ -32,34 +37,26 @@ const Table = () => {
       </TableNavigation>
       <TableList>
         <tr>
-          <td>
-            <span>Name</span>
-          </td>
-          <td>
-            <span>Surname</span>
-          </td>
-          <td>
-            <span>Date of Birth</span>
-          </td>
-          <td>
-            <span>Age</span>
-          </td>
-          <td>
-            <span>Status</span>
-          </td>
-          <td>
-            <span>Role</span>
-          </td>
-          <td>
-            <Link href="/Edit">
-              <button>
-                <AiTwotoneEdit />
-              </button>
-            </Link>
-            <button>
-              <AiFillDelete />
-            </button>
-          </td>
+          {data?.map((user, i) => (
+            <td key={i}>
+              <span>{user.firstname}</span>
+              <span>{user.lastname}</span>
+              <span>{user.date}</span>
+              <span>{user.age}</span>
+              <span>{user.status}</span>
+              <span>{user.role}</span>
+              <span>
+                <Link href="/Edit">
+                  <button>
+                    <AiTwotoneEdit />
+                  </button>
+                </Link>
+                <button>
+                  <AiFillDelete />
+                </button>
+              </span>
+            </td>
+          ))}
         </tr>
       </TableList>
     </TableContent>
@@ -89,15 +86,15 @@ const TableNavigation = styled.thead`
 
 const TableList = styled.tbody`
   tr {
-    border-bottom: solid 0.2px #fff;
-    border-top: solid 0.2px #fff;
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    padding: 20px 50px;
+    flex-direction: column;
     td {
+      border-bottom: solid 0.2px #fff;
+      border-top: solid 0.2px #fff;
+      padding: 20px 50px;
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
       span {
         font-size: 13px;
         font-weight: 100;
